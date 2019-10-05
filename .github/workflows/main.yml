@@ -1,30 +1,44 @@
-on: [push]
+on: 
+  push:
+    branches:
+      - master
 
 jobs:
-  hello_windows_job:
+  resharper:
     runs-on: windows-latest
-    name: A job to say hello from Windows
+    name: Resharper
     steps:
     - name: Checkout
       uses: actions/checkout@v1
       with:
         fetch-depth: 1
-    - name: Hello world action step
-      id: hello
-      uses: ./hello-world
+    - name: Setup Resharper
+      id: setup_resharper
+      uses: .\actions\setup-resharper
       with:
-        who-to-greet: 'Mona the Octocat'
-
-  hello_world_job:
-    runs-on: ubuntu-latest
-    name: A job to say hello
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v1
+        resharper-version: '2019.2.2'
+    - name: Resharper inspect
+      id: resharper_inspect
+      uses: .\actions\resharper-inspect
       with:
-        fetch-depth: 1
-    - name: Hello world action step
-      id: hello
-      uses: ./hello-world
+        inspectcode-path: ${{ steps.setup_resharper.outputs.inspectcode-path }}
+        results-path: ${{ steps.setup_resharper.outputs.results-path }}
+        solution-path: .\Sample\Sample.sln
+    - name: Resharper inspection summary
+      id: resharper_inspection_summary
+      uses: .\actions\resharper-inspection-summary
       with:
-        who-to-greet: 'Mona the Octocat'
+        results-xml: ${{ steps.resharper_inspect.outputs.results-xml }}
+        results-path: ${{ steps.setup_resharper.outputs.results-path }}
+    - name: Upload Resharper results
+      uses: actions/upload-artifact@v1
+      with:
+        name: resharper
+        path: ${{ steps.setup_resharper.outputs.results-path }}
+    - name: Resharper inspection thresholds
+      id: resharper_inspection_thresholds
+      uses: .\actions\resharper-inspection-threshold
+      with:
+        results-summary-json: ${{ steps.resharper_inspection_summary.outputs.results-summary-json }}
+        error-threshold: 100
+        warning-threshold: 100

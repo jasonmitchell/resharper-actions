@@ -1,0 +1,18 @@
+name: 'Resharper Inspection Threshold'
+description: 'Fails a job if the thresholds for acceptable Resharper warnings are exceeded'
+inputs:
+  results-summary-json:
+    description: 'The JSON summary of the Resharper inspection'
+    required: true
+  error-threshold:
+    description: 'The acceptable number of Resharper errors'
+    required: true
+    default: 0
+  warning-threshold:
+    description: 'The acceptable number of Resharper warnings'
+    required: true
+    default: 0
+
+runs:
+  using: 'node12'
+  main: 'index.js'

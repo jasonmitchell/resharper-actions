@@ -19,6 +19,9 @@
   "homepage": "https://github.com/jasonmitchell/resharper-action#readme",
   "dependencies": {
     "@actions/core": "^1.1.3",
-    "@actions/github": "^1.1.0"
+    "@actions/exec": "^1.0.1",
+    "@actions/github": "^1.1.0",
+    "@actions/tool-cache": "^1.1.2",
+    "xml2js": "^0.4.22"
   }
 }

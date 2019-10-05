@@ -1,0 +1,16 @@
+name: 'Resharper Inspection Summary'
+description: 'Summarises Resharper inspection results'
+inputs:
+  results-xml:
+    description: 'The XML output of the Resharper inspection'
+    required: true
+  results-path:
+    description: 'The location to output Resharper results to'
+    required: true
+outputs:
+  results-summary-json:
+    description: 'The JSON summary of the Resharper inspection'
+
+runs:
+  using: 'node12'
+  main: 'index.js'
