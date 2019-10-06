@@ -1,9 +1,10 @@
 name: 'Setup Resharper'
 description: 'Setup Resharper Command-Line Tools'
 inputs:
-  resharper-version:
-    description: 'The version of the Resharper Command-Line tools to setup'
+  resharper-url:
+    description: 'The URL to download the Resharper Command-Line tools from'
     required: true
+    default: 'https://download.jetbrains.com/resharper/ReSharperUltimate.2019.2.2/JetBrains.ReSharper.CommandLineTools.2019.2.2.zip'
   resharper-path:
     description: 'The path to install the Resharper Command-Line tools'
     required: true

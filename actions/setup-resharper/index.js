@@ -3,8 +3,7 @@ const tc = require('@actions/tool-cache');
 
 async function run() {
   try { 
-    const resharperVersion = core.getInput('resharper-version');
-    const resharperUrl = `https://download.jetbrains.com/resharper/ReSharperUltimate.${resharperVersion}/JetBrains.ReSharper.CommandLineTools.${resharperVersion}.zip`;
+    const resharperUrl = core.getInput('resharper-url');
     const resharperZipPath = await tc.downloadTool(resharperUrl);
     const resharperPath = await tc.extractZip(resharperZipPath, core.getInput('resharper-path'));
     const inspectCodeExe = `${resharperPath}\\inspectcode.exe`;
