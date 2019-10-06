@@ -6,12 +6,8 @@ inputs:
     required: true
   error-threshold:
     description: 'The acceptable number of Resharper errors'
-    required: true
-    default: 0
   warning-threshold:
     description: 'The acceptable number of Resharper warnings'
-    required: true
-    default: 0
 
 runs:
   using: 'node12'

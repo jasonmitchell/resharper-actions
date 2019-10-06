@@ -12,6 +12,10 @@ jobs:
       uses: actions/checkout@v1
       with:
         fetch-depth: 1
+    - name: Setup Nuget
+      uses: warrenbuckley/Setup-Nuget@v1
+    - name: Restore packages
+      run: nuget restore .\Sample\Sample.sln
     - name: Setup Resharper
       id: setup_resharper
       uses: .\actions\setup-resharper
@@ -40,5 +44,4 @@ jobs:
       uses: .\actions\resharper-inspection-threshold
       with:
         results-summary-json: ${{ steps.resharper_inspection_summary.outputs.results-summary-json }}
-        error-threshold: 100
-        warning-threshold: 100
+        error-threshold: 0
