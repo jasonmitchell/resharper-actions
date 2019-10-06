@@ -1,0 +1,20 @@
+name: 'Resharper Inspect'
+description: 'Runs Resharper inspection on provided solution'
+inputs:
+  inspectcode-path:
+    description: 'The location of the Resharper Inspect Code executable'
+    required: true
+  results-output-location:
+    description: 'The file to save the results to.'
+    required: true
+    default: '.\.output\resharper'
+  solution-path:
+    description: 'The path to the .NET solution'
+    required: true
+outputs:
+  results-xml:
+    description: 'The path to the results XML file'
+
+runs:
+  using: 'node12'
+  main: 'index.js'

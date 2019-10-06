@@ -1,4 +1,4 @@
-on: [push]
+on: [push, pull_request]
 
 jobs:
   resharper:
@@ -9,10 +9,16 @@ jobs:
       uses: actions/checkout@v1
       with:
         fetch-depth: 1
+    - name: Setup Resharper
+      id: setup_resharper
+      uses: .\actions\setup-resharper
+      with:
+        resharper-version: '2019.2.2'
     - name: Resharper Inspect
       id: resharper_inspect
-      uses: .\resharper-inspect
+      uses: .\actions\resharper-inspect
       with:
+        inspectcode-path: "${{ steps.setup_resharper.outputs.inspectcode-path }}"
         solution-path: .\Sample\Sample.sln
     - name: Upload Resharper Results
       uses: actions/upload-artifact@v1
