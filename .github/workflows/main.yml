@@ -21,25 +21,25 @@ jobs:
       uses: .\actions\setup-resharper
       with:
         resharper-version: '2019.2.2'
-    - name: Resharper inspect
+    - name: Run inspection
       id: resharper_inspect
       uses: .\actions\resharper-inspect
       with:
         inspectcode-path: ${{ steps.setup_resharper.outputs.inspectcode-path }}
         results-path: ${{ steps.setup_resharper.outputs.results-path }}
         solution-path: .\Sample\Sample.sln
-    - name: Resharper inspection summary
+    - name: Summarise inspection results
       id: resharper_inspection_summary
       uses: .\actions\resharper-inspection-summary
       with:
         results-xml: ${{ steps.resharper_inspect.outputs.results-xml }}
         results-path: ${{ steps.setup_resharper.outputs.results-path }}
-    - name: Upload Resharper results
+    - name: Upload inspection results
       uses: actions/upload-artifact@v1
       with:
         name: resharper
         path: ${{ steps.setup_resharper.outputs.results-path }}
-    - name: Resharper inspection thresholds
+    - name: Apply inspection thresholds
       id: resharper_inspection_thresholds
       uses: .\actions\resharper-inspection-threshold
       with:
