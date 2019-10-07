@@ -4,6 +4,10 @@ inputs:
   inspectcode-path:
     description: 'The location of the Resharper Inspect Code executable'
     required: true
+  minimum-severity:
+    description: 'The minimum severity level to report. One of [INFO, HINT, SUGGESTION, WARNING, ERROR]'
+    required: true
+    default: WARNING
   results-path:
     description: 'The location to output Resharper results to'
     required: true

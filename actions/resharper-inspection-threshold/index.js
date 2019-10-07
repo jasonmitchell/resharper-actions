@@ -13,12 +13,15 @@ async function run() {
       }
 
       const summary = JSON.parse(summaryJson);
-      if (errorThreshold && summary.severities.error > Number(errorThreshold)) {
-        core.setFailed(`${summary.severities.error} Resharper errors were detected.  The acceptable threshold is ${errorThreshold}`)
+
+      const errorCount = summary.severities.error || 0;
+      if (errorThreshold && errorCount > Number(errorThreshold)) {
+        core.setFailed(`${errorCount} Resharper errors were detected.  The acceptable threshold is ${errorThreshold}`)
       }
 
-      if (warningThreshold && summary.severities.warning > Number(warningThreshold)) {
-        core.setFailed(`${summary.severities.warning} Resharper warnings were detected.  The acceptable threshold is ${warningThreshold}`)
+      const warningCount = summary.severities.warning || 0;
+      if (warningThreshold && warningCount > Number(warningThreshold)) {
+        core.setFailed(`${warningCount} Resharper warnings were detected.  The acceptable threshold is ${warningThreshold}`)
       }
     });
   } 

@@ -17,22 +17,24 @@ function readIssueTypes(report) {
 
 function createEmptySummary(issueTypes) {
   const summary = {
-    severities: {
-      error: 0,
-      warning: 0,
-      suggestion: 0
-    },
+    severities: {},
     issueTypes: {}
   };
 
   for (let i = 0; i < issueTypes.length; i++) {
     const issueType = issueTypes[i];
+    const severity = issueType.Severity.toLowerCase();
+
+    if (!summary.severities[severity]) {
+      summary.severities[severity] = 0;
+    }
+
     summary.issueTypes[issueType.Id] = {
-      severity: issueType.Severity.toLowerCase(),
+      severity: severity,
       category: issueType.Category,
       description: issueType.Description,
       count: 0
-    }
+    };
   }
 
   return summary;
