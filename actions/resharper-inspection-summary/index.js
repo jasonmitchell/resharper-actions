@@ -68,25 +68,31 @@ async function run() {
     const resultsPath = core.getInput('results-path');
     const summaryJsonPath = `${resultsPath}\\inspection-summary.json`
 
-    const resultsXml = core.getInput('results-xml');
+    const resultsXmlPath = core.getInput('results-xml-path');
     
-    const parser = new xml2js.Parser();
-    parser.parseString(resultsXml, function (err, result) {
+    fs.readFile(resultsXmlPath, {encoding: 'utf-8'}, function(err, resultsXml){
       if (err) {
         throw err;
       }
-      
-      const summary = summariseResults(result.Report);
-      const summaryJson = JSON.stringify(summary, null, 2)
 
-      fs.writeFile(summaryJsonPath, summaryJson, function(err) {
-        if(err) {
-            throw err;
+      const parser = new xml2js.Parser();
+      parser.parseString(resultsXml, function (err, result) {
+        if (err) {
+          throw err;
         }
+        
+        const summary = summariseResults(result.Report);
+        const summaryJson = JSON.stringify(summary, null, 2)
 
-        console.log("Summary:")
-        console.log(summaryJson);
-        core.setOutput('results-summary-json', summaryJson);
+        fs.writeFile(summaryJsonPath, summaryJson, function(err) {
+          if(err) {
+              throw err;
+          }
+
+          console.log("Summary:")
+          console.log(summaryJson);
+          core.setOutput('results-summary-json-path', summaryJsonPath);
+        });
       });
     });
   } 

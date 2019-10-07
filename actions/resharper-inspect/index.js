@@ -11,14 +11,7 @@ async function run() {
     const resultsXmlPath = `${resultsPath}\\inspect-results.xml`
 
     await exec.exec(`${inspectCodePath} ${solutionPath} -o=${resultsXmlPath}`);
-
-    fs.readFile(resultsXmlPath, {encoding: 'utf-8'}, function(err, xml){
-      if (err) {
-        throw err;
-      }
-
-      core.setOutput('results-xml', xml);
-    });
+    core.setOutput('results-xml-path', resultsXmlPath);
   } 
   catch (error) {
     core.setFailed(error.message);

@@ -11,8 +11,8 @@ inputs:
     description: 'The path to the .NET solution'
     required: true
 outputs:
-  results-xml:
-    description: 'The XML output of the Resharper inspection'
+  results-xml-path:
+    description: 'The path to the XML output of the Resharper inspection'
 
 runs:
   using: 'node12'

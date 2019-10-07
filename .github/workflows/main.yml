@@ -8,17 +8,22 @@ jobs:
     runs-on: windows-latest
     name: Resharper
     steps:
+
     - name: Checkout
       uses: actions/checkout@v1
       with:
         fetch-depth: 1
+
     - name: Setup Nuget
       uses: warrenbuckley/Setup-Nuget@v1
+
     - name: Restore packages
       run: nuget restore .\Sample\Sample.sln
+
     - name: Setup Resharper
       id: setup_resharper
       uses: .\actions\setup-resharper
+
     - name: Run inspection
       id: resharper_inspect
       uses: .\actions\resharper-inspect
@@ -26,19 +31,22 @@ jobs:
         inspectcode-path: ${{ steps.setup_resharper.outputs.inspectcode-path }}
         results-path: ${{ steps.setup_resharper.outputs.results-path }}
         solution-path: .\Sample\Sample.sln
+
     - name: Summarise inspection results
       id: resharper_inspection_summary
       uses: .\actions\resharper-inspection-summary
       with:
-        results-xml: ${{ steps.resharper_inspect.outputs.results-xml }}
+        results-xml-path: ${{ steps.resharper_inspect.outputs.results-xml-path }}
         results-path: ${{ steps.setup_resharper.outputs.results-path }}
+
     - name: Upload inspection results
       uses: actions/upload-artifact@v1
       with:
         name: resharper
         path: ${{ steps.setup_resharper.outputs.results-path }}
+
     - name: Apply inspection thresholds
       uses: .\actions\resharper-inspection-threshold
       with:
-        results-summary-json: ${{ steps.resharper_inspection_summary.outputs.results-summary-json }}
+        results-summary-json-path: ${{ steps.resharper_inspection_summary.outputs.results-summary-json-path }}
         error-threshold: 0

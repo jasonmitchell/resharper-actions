@@ -1,8 +1,8 @@
 name: 'Resharper Inspection Threshold'
 description: 'Fails a job if the thresholds for acceptable Resharper warnings are exceeded'
 inputs:
-  results-summary-json:
-    description: 'The JSON summary of the Resharper inspection'
+  results-summary-json-path:
+    description: 'The path to the JSON summary of the Resharper inspection'
     required: true
   error-threshold:
     description: 'The acceptable number of Resharper errors'
