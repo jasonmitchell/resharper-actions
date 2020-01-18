@@ -17,17 +17,18 @@ function readIssueTypes(report) {
 
 function createEmptySummary(issueTypes) {
   const summary = {
-    severities: {},
+    severities: {
+      error: 0,
+      warning: 0,
+      suggestion: 0,
+      hint: 0
+    },
     issueTypes: {}
   };
 
   for (let i = 0; i < issueTypes.length; i++) {
     const issueType = issueTypes[i];
     const severity = issueType.Severity.toLowerCase();
-
-    if (!summary.severities[severity]) {
-      summary.severities[severity] = 0;
-    }
 
     summary.issueTypes[issueType.Id] = {
       severity: severity,
