@@ -21,15 +21,14 @@ jobs:
       run: nuget restore .\Sample\Sample.sln
 
     - name: Setup Resharper
-      id: setup_resharper
-      uses: .\actions\setup-resharper
+      run: nuget install JetBrains.ReSharper.CommandLineTools -OutputDirectory .\.tools -ExcludeVersion -Source https://api.nuget.org/v3/index.json
 
     - name: Run inspection
       id: resharper_inspect
       uses: .\actions\resharper-inspect
       with:
-        inspectcode-path: ${{ steps.setup_resharper.outputs.inspectcode-path }}
-        results-path: ${{ steps.setup_resharper.outputs.results-path }}
+        inspectcode-path: .\.tools\JetBrains.ReSharper.CommandLineTools\tools\inspectcode.exe
+        results-path: .\.resharper
         solution-path: .\Sample\Sample.sln
 
     - name: Summarise inspection results
@@ -43,7 +42,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: resharper
-        path: ${{ steps.setup_resharper.outputs.results-path }}
+        path: .\.resharper
 
     - name: Apply inspection thresholds
       uses: .\actions\resharper-inspection-threshold
