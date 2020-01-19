@@ -30,6 +30,7 @@ jobs:
         inspectcode-path: .\.tools\JetBrains.ReSharper.CommandLineTools\tools\inspectcode.exe
         results-path: .\.resharper
         solution-path: .\Sample\Sample.sln
+        minimum-severity: HINT
 
     - name: Summarise inspection results
       id: resharper_inspection_summary
@@ -37,6 +38,13 @@ jobs:
       with:
         results-xml-path: ${{ steps.resharper_inspect.outputs.results-xml-path }}
         results-path: ${{ steps.setup_resharper.outputs.results-path }}
+
+    - name: Print totals
+      run: |
+        echo "Errors: ${{ steps.resharper_inspection_summary.outputs.errors }}"
+        echo "Warnings: ${{ steps.resharper_inspection_summary.outputs.warnings }}"
+        echo "Suggestions: ${{ steps.resharper_inspection_summary.outputs.suggestions }}"
+        echo "Hints: ${{ steps.resharper_inspection_summary.outputs.hints }}"
 
     - name: Upload inspection results
       uses: actions/upload-artifact@v1
@@ -48,4 +56,4 @@ jobs:
       uses: .\actions\resharper-inspection-threshold
       with:
         results-summary-json-path: ${{ steps.resharper_inspection_summary.outputs.results-summary-json-path }}
-        error-threshold: 0
+        error-threshold: 1

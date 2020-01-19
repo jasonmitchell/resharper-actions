@@ -94,6 +94,11 @@ async function run() {
 
           console.log("Summary:")
           console.log(summaryJson);
+
+          core.setOutput('errors', summary.severities.error);
+          core.setOutput('warnings', summary.severities.warning);
+          core.setOutput('suggestions', summary.severities.suggestion);
+          core.setOutput('hints', summary.severities.hint);
           core.setOutput('results-summary-json-path', summaryJsonPath);
         });
       });

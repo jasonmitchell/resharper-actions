@@ -8,6 +8,14 @@ inputs:
     description: 'The location to output Resharper results to'
     required: true
 outputs:
+  errors:
+    description: 'The total number of errors found'
+  warnings:
+    description: 'The total number of warnings found'
+  suggestions:
+    description: 'The total number of suggestions found'
+  hints:
+    description: 'The total number of hints found'
   results-summary-json-path:
     description: 'The path to the JSON summary of the Resharper inspection'
 
