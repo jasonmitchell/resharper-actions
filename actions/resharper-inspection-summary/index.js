@@ -92,9 +92,12 @@ async function run() {
               throw err;
           }
 
-          console.log("Summary:")
+          console.log("Summary:");
           console.log(summaryJson);
 
+          console.log(`Errors: ${summary.severities.error}`);
+          console.log(`Warnings: ${summary.severities.warning}`);
+          
           core.setOutput('errors', summary.severities.error);
           core.setOutput('warnings', summary.severities.warning);
           core.setOutput('suggestions', summary.severities.suggestion);
